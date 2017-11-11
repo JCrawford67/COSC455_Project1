@@ -16,8 +16,7 @@ object Compiler {
   val Parser = new MySyntaxAnalyzer
   val SemanticAnalyzer = new MySemanticAnalyzer
 
-  def main(args: Array[String]) {
-    // Check usage
+  def main(args: Array[String]): Unit = {
     checkfile(args)
     readfile(args(0))
     fileName = mkFileName(args(0))
@@ -38,13 +37,13 @@ object Compiler {
   }
 
   // Reads the file into a String to be processed
-  def readfile(filename : String) ={
+  def readfile(filename : String) = {
     val source = scala.io.Source.fromFile(filename)
     fileContents = try source.mkString finally source.close()
 
   }
   // Checks for correct number of arguments and for correct file type
-  def checkfile(args : Array[String]) ={
+  def checkfile(args : Array[String]) = {
     if(args.length != 1){
       println("Either no arguments or too many arguments. \nOne argument is required. \nExiting")
       System.exit(1)
@@ -56,7 +55,7 @@ object Compiler {
 
   // Creates the filepath for the finished HTML doc that was created
   }
-  def mkFileName(fullPath : String): String ={
+  def mkFileName(fullPath : String): String = {
     fullPath.split('.').init ++ Seq("html") mkString "."
   }
 }

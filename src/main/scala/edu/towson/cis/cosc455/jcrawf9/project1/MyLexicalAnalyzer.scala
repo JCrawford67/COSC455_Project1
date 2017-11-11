@@ -12,7 +12,7 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
   var nextChar : Char = 0
   var currentToken : String = ""
   var lexems : ArrayBuffer[String] = new ArrayBuffer[String]()
-  var itr : Iterator[String] = null
+  var itr : Iterator[String] = _
   val terminals = CONSTANTS.terminals
 
   // This method uses the iterator for the lexemes array to return any token that has yet to be processed
@@ -35,7 +35,7 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
   }
 
   // This method processes tokens and separates the special Chars and the normal text
-  def getToken(): Unit ={
+  def getToken(): Unit = {
     if(isSpecial()){
       addChar()
       specialToken(nextChar)
@@ -62,7 +62,7 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
   }
 
   // This method is a helper method for specialToken() that handles all the special tags
-  def slashTag(): Unit ={
+  def slashTag(): Unit = {
     nextChar = getChar()
     // If the next Char is a new line, add it to the list.
     if(nextChar == CONSTANTS.BSLASH){
@@ -95,14 +95,14 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
   }
 
   // If left bracket is encountered first, then get link token
-  def leftBrack(): Unit ={
+  def leftBrack(): Unit = {
     addText()
     nextChar = getChar()
     addLink()
   }
 
   // If exclamation point is encountered before left bracket, then add image tag, else throw an error
-  def exclaim(): Unit ={
+  def exclaim(): Unit = {
     nextChar = getChar()
     if(nextChar != '[') invalidTokenError(nextChar+"")
     addChar()
@@ -113,7 +113,7 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
 
   // If pound sign (#) is encountered, then create a list
   // Add text until new line is encountered
-  def headingList(): Unit ={
+  def headingList(): Unit = {
     addText()
     nextChar = getChar()
     while(nextChar != '\n'){
@@ -125,7 +125,7 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
 
   // If a star (*) is encountered, then either bold or italics are created
   // This method will look ahead to check for a closing star Char. If none then move position back
-  def styleTags(): Unit ={
+  def styleTags(): Unit = {
 
     currentToken = nextChar+""
     nextChar = getChar()
@@ -155,13 +155,13 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
   }
 
   // This method adds current token to lexems list and resets the token
-  def addToken(): Unit ={
+  def addToken(): Unit = {
     lexems += currentToken
     resetToken()
   }
 
   // This method adds a single token to the lexems list. Newline Chars are ignored for this method
-  def addText(): Unit ={
+  def addText(): Unit = {
     if(nextChar != '\n' && nextChar != '\t'){
       resetToken()
       addChar()
@@ -170,7 +170,7 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
   }
 
   // This method adds a line Char to lexems list. Used for headings and lists
-  def addLine(): Unit ={
+  def addLine(): Unit = {
     if(nextChar == '\n'){
       resetToken()
       addChar()
@@ -180,14 +180,14 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
 
   // This method adds text to the variable definition tokens.
   // This method allows use of equals Char
-  def addInnerText(): Unit ={
+  def addInnerText(): Unit = {
     if(isText() || CONSTANTS.EQSIGN.equals("=")){
       addText()
     }
   }
 
   // This method adds a link to the lexems list.
-  def addLink(): Unit ={
+  def addLink(): Unit = {
     while(nextChar != ']'){
       addText()
       nextChar = getChar()
@@ -206,14 +206,14 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
   }
 
   // This method skips over space Chars when encountered
-  def removeSpace(): Unit ={
+  def removeSpace(): Unit = {
     while(isSpace()){
       nextChar = getChar()
     }
   }
 
   // This method resets the current token to Nil
-  def resetToken(): Unit ={
+  def resetToken(): Unit = {
     currentToken = ""
   }
 

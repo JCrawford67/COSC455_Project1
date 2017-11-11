@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: edu.towson.cis.cosc455.jcrawf9.project1.Compiler
+

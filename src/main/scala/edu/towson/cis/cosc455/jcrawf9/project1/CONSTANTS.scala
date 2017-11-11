@@ -34,7 +34,7 @@ object CONSTANTS {
   val PLUSIG : Char = '+'
   val ASTERI : Char = '*'
 
-  //Handy lists - honestly a lot of them are unnecessary but at this point I'm too scared to touch anything here.
+  // Handy lists
   val specialChar : List[String] = List("\\","[","#","*","!","+")
 
   val letters : List[String] = List("a","b","c","d","e","f","g","h","i","j","k","l","m",
@@ -44,17 +44,17 @@ object CONSTANTS {
   val whiteSpace : List[String] = List(" ", "\t", "\n", "\b","\f","\r")
   val validText : List[String] = whiteSpace ::: letters ::: numbersEtc
 
-  //val beginTag = List(DOCB, TITLEB, HEADING, PARAB, LISTITEM, LINKB, IMAGEB, DEFB,
-    //USEB)
-  //val endTag = List(DOCE, BRACKETE, PARAE, "\n")
-  //val singleTag = List(NEWLINE)
-  //val symetricTag = List(BOLD, ITALICS)
-  //val addressContainer = List(ADDRESSB, ADDRESSE)
-  val terminals = /*beginTag ::: endTag ::: singleTag ::: symetricTag ::: addressContainer :::*/ specialChar ::: validText
+  // These "tag" vals are essentially redundancies that arent really used
+  val beginTag = List(DOCB, TITLEB, HEADING, PARAB, LISTITEM, LINKB, IMAGEB, DEFB, USEB)
+  val endTag = List(DOCE, BRACKETE, PARAE, "\n")
+  val singleTag = List(NEWLINE)
+  val symetricTag = List(BOLD, ITALICS)
+  val addressContainer = List(ADDRESSB, ADDRESSE)
+  val terminals = beginTag ::: endTag ::: singleTag ::: symetricTag ::: addressContainer ::: specialChar ::: validText
 
   val innerText = List(USEB, HEADING, BOLD, ITALICS, LISTITEM, IMAGEB, LINKB) ::: validText
 
-  //HTML Tags
+  // HTML Tags
   val HTMLOPEN : String = "<HTML>"
   val HTMLCLOSE : String = "</HTML>"
   val HEADOPEN : String = "<HEAD>"

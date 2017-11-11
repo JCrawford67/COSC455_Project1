@@ -19,7 +19,7 @@ class MySemanticAnalyzer {
   var focus : String = ""
 
   // This method gets the parse tree and iterates through it and converts each token to HTML code
-  def convertToHTML(): Unit ={
+  def convertToHTML(): Unit = {
 
     while(!stack.isEmpty){
       focus = stack.pop()
@@ -31,7 +31,7 @@ class MySemanticAnalyzer {
   }
 
   // This method matches GITTEX tags to its respective HTML tag or calls a select method to process it
-  def getHTML(): Unit ={
+  def getHTML(): Unit = {
 
     focus.toUpperCase() match{
       case CONSTANTS.DOCB => docStack.push(CONSTANTS.HTMLOPEN)
@@ -50,7 +50,7 @@ class MySemanticAnalyzer {
   }
 
   // This method decides whether use of the parenthesis tags will result in a link or an image
-  def handleImgLink(): Unit ={
+  def handleImgLink(): Unit = {
     while(!stack.top.equals(CONSTANTS.LINKB) && !stack.top.equals(CONSTANTS.IMAGEB)){
       tempStack.push(stack.pop())
     }
@@ -60,7 +60,7 @@ class MySemanticAnalyzer {
   }
 
   // This method handles instances of links if found
-  def handleLink(): Unit ={
+  def handleLink(): Unit = {
     var link : String = ""
     var linkText : String = ""
     var linkTag : String = ""
@@ -78,7 +78,7 @@ class MySemanticAnalyzer {
   }
 
   // This method handles instances of images if found
-  def handleImg(): Unit ={
+  def handleImg(): Unit = {
     var link : String = ""
     var altText : String = ""
     var imgTag : String = ""
@@ -96,7 +96,7 @@ class MySemanticAnalyzer {
   }
 
   // This method decides whether or not use of newLine Chars will result in use of heading or list item
-  def handleHeadList(): Unit ={
+  def handleHeadList(): Unit = {
 
     while(!stack.top.equals("#") && !stack.top.equals("+")){
       tempStack.push(stack.pop())
@@ -108,14 +108,14 @@ class MySemanticAnalyzer {
   }
 
   // This method handles instances of headings if found
-  def handleHead(): Unit ={
+  def handleHead(): Unit = {
     var heading : String = ""
     while(!tempStack.isEmpty) heading += tempStack.pop()
     docStack.push(CONSTANTS.H1CLOSE,heading,CONSTANTS.H1OPEN)
   }
 
   // This method handles instances of a list item if found
-  def handleList(): Unit ={
+  def handleList(): Unit = {
     docStack.push(CONSTANTS.LICLOSE)
     tempStack = tempStack.reverse
 
@@ -146,7 +146,7 @@ class MySemanticAnalyzer {
   }
 
   // This method handles use of variables by calling the findVar() method
-  def handleVarUse(): Unit ={
+  def handleVarUse(): Unit = {
     val varName = tempStack.pop()
     docStack.push(findVar(varName))
     if(!tempStack.isEmpty) tempStack.pop()
@@ -155,7 +155,7 @@ class MySemanticAnalyzer {
 
   // This method handles instances of variable definitions
   // VarDefs don't make it into HTML code so I'm leaving this method blank so as to ignore them
-  def handleVarDef(): Unit ={
+  def handleVarDef(): Unit = {
     // Whole lotta nothin...
   }
 
@@ -195,7 +195,7 @@ class MySemanticAnalyzer {
 
   // This method handles the use of italics if encountered
   // The counter used is there so determine if the found tag is an opening or closing tag
-  def handleItalics(): Unit ={
+  def handleItalics(): Unit = {
     if(italTag == 0){
       docStack.push(CONSTANTS.ICLOSE)
       italTag = 1
@@ -208,7 +208,7 @@ class MySemanticAnalyzer {
 
   // This method handles the use of bold tags if encountered
   // The counter used is there so determine if the found tag is an opening or closing tag
-  def handleBold(): Unit ={
+  def handleBold(): Unit = {
     if(boldTag == 0){
       docStack.push(CONSTANTS.BCLOSE)
       boldTag = 1
@@ -221,7 +221,7 @@ class MySemanticAnalyzer {
   }
 
   // This method determines whether an instance of a right bracket is for a title or a variable definition
-  def handleBracTag(): Unit ={
+  def handleBracTag(): Unit = {
     while(stack.top.charAt(0) != '\\'){
       tempStack.push(stack.pop())
     }
@@ -234,7 +234,7 @@ class MySemanticAnalyzer {
   }
 
   // This method handles instances of titles
-  def handleTitle(): Unit ={
+  def handleTitle(): Unit = {
     var title : String = ""
     while(!tempStack.isEmpty){
       title += tempStack.pop()
@@ -243,7 +243,7 @@ class MySemanticAnalyzer {
   }
 
   // This method writes the generated HTML code to an HTML file
-  def writeToFile(name : String): Unit ={
+  def writeToFile(name : String): Unit = {
     val file = new File(name)
     val wr = new BufferedWriter(new FileWriter(file))
     wr.write(html)
@@ -268,7 +268,7 @@ class MySemanticAnalyzer {
   }
 
   // This method returns an error message if a semantic error is encountered
-  def SemanticError(error : String): Unit ={
+  def SemanticError(error : String): Unit = {
     println("Semantic error discovered. \n" + error + "\nExiting.")
     System.exit(1)
   }
